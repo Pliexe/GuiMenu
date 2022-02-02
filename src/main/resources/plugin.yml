@@ -1,0 +1,12 @@
+name: GuiMenu
+version: '1.0'
+main: pliexe.guimenu.GuiMenu
+softdepend: [ PlaceholderAPI ]
+authors: [ Pliexe ]
+description: A plugin for gui menus
+
+commands:
+  guimenu:
+    description: Control of GuiMenu
+    usage: /<command> subcommand
+    aliases: gm
