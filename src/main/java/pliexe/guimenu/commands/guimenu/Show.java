@@ -1,40 +1,35 @@
 package pliexe.guimenu.commands.guimenu;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 import pliexe.guimenu.GuiMenu;
-import pliexe.guimenu.SubCommand;
-import java.util.ArrayList;
+import pliexe.guimenu.commandhandler.SubCommand;
 
 public class Show extends SubCommand {
     private final GuiMenu plugin;
 
     public Show(GuiMenu plugin) {
-        super("show", "Show an gui menu!");
+        super("show", "Show an gui menu!", "<gui name>");
         this.plugin = plugin;
     }
 
     @Override
     protected void Run(CommandSender sender, Command command, String label, String[] args) {
         if(sender instanceof Player) {
-            if(args.length > 1) {
+            if(args.length > 0) {
 
                 StringBuilder name = new StringBuilder();
 
-                for(int i = 1; i < args.length; i++)
+                for(int i = 0; i < args.length; i++)
                     name.append(args[i]).append(" ");
 
                 if(!plugin.getGuiInventoryManager().openGui(name.toString().trim(), (Player) sender)) {
-                    sender.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Menu named " + name.toString().trim() + " was not found!");
+                    BadUsage(sender, "<gui name>", ChatColor.RED + "Menu named \"" + ChatColor.BOLD + name.toString().trim() + ChatColor.RED + "\" was not found!");
                 }
 
-            } else sender.sendMessage("Missing gui menu name! Usage: /guimenu show \"menuname\"");
+            } else BadUsage(sender, "<gui name>");
         } else sender.sendMessage("You may not run this command in console!");
     }
 }

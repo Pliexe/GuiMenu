@@ -5,6 +5,8 @@ softdepend: [ PlaceholderAPI ]
 authors: [ Pliexe ]
 description: A plugin for gui menus
 
+api-version: 1.13
+
 commands:
   guimenu:
     description: Control of GuiMenu

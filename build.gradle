@@ -1,8 +1,10 @@
 plugins {
+//    id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
+    id 'java-library'
 }
 
-group = 'pliexe'
+group = 'pliexe.guimenu'
 version = '1.0'
 
 repositories {
@@ -15,11 +17,35 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
+    maven {
+        name = "jitpack.io"
+        url = "https://jitpack.io"
+    }
+
+    maven {
+        url("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    }
 }
 
 dependencies {
     compileOnly 'org.spigotmc:spigot-api:1.8-R0.1-SNAPSHOT'
+
+    compileOnly("me.clip:placeholderapi:2.11.1")
+
+    api("com.github.simplix-softworks:simplixstorage:3.2.4")
+
+//    implementation("com.github.simplix-softworks:simplixstorage:3.2.4")
+
+
 }
+
+//shadowJar {
+//    dependencies {
+//        include("com.github.simplix-softworks:simplixstorage:3.2.4")
+//    }
+//    relocate("de.leonhard.storage", "guimenu.pliexe.storage")
+//}
+
 
 def targetJavaVersion = 8
 java {
@@ -31,8 +57,10 @@ java {
     }
 }
 
+compileJava {options.encoding = "UTF-8"}
+
 tasks.withType(JavaCompile).configureEach {
-    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+    if (targetJavaVersion >= 8 || JavaVersion.current().isJava8Compatible()) {
         options.release = targetJavaVersion
     }
 }

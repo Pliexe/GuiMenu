@@ -1,19 +1,17 @@
-package pliexe.guimenu;
+package pliexe.guimenu.commandhandler;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.StringJoiner;
 
 public abstract class GroupCommand {
-    private HashMap<String, Object> commands = new HashMap<>();
+    protected HashMap<String, Object> commands = new HashMap<>();
 
-    protected String name;
-    protected String description;
+    protected final String name;
+    protected final String description;
 
     String getName() {
         return name;
@@ -49,7 +47,7 @@ public abstract class GroupCommand {
                     ShowHelp(sender, 0, args, command.getName(), subLevel);
                 } else {
                     if(cmd instanceof SubCommand)
-                        ((SubCommand) cmd).Run(sender, command, label, args);
+                        ((SubCommand) cmd).Run(sender, command, label, Arrays.copyOfRange(args, subLevel + 1, args.length));
                     else ((GroupCommand) cmd).Run(sender, command, label, args, subLevel+1);
                 }
             }
@@ -83,7 +81,7 @@ public abstract class GroupCommand {
                     .append(ChatColor.YELLOW)
                     .append(ChatColor.BOLD)
                     .append("GuiMenu: Help. Page ")
-                    .append(index)
+                    .append(index + 1)
                     .append(" out of ")
                     .append(maxPages)
                     .append(ChatColor.RESET)
@@ -94,7 +92,7 @@ public abstract class GroupCommand {
 
             StringBuilder argsStr = new StringBuilder();
 
-            if(args.length > subLevel)
+            if(args.length >= subLevel)
                 for(int j = 0; j < subLevel; j++)
                     argsStr.append(args[j]).append(" ");
 
@@ -114,11 +112,12 @@ public abstract class GroupCommand {
                         .append(" ")
                         .append(argsStr)
                         .append(values[i] instanceof GroupCommand ? ((GroupCommand)values[i]).name : ((SubCommand)values[i]).name)
+                        .append(" ")
+                        .append(values[i] instanceof GroupCommand ? "<subcommand>" : (((SubCommand)values[i]).usage == null ? "" : ((SubCommand)values[i]).usage + " "))
                         .append(ChatColor.RESET)
                         .append(ChatColor.BOLD)
-                        .append(" - ")
-                        .append(values[i] instanceof GroupCommand ? ((GroupCommand)values[i]).description : ((SubCommand)values[i]).description)
-                        .append(" ‖");
+                        .append("- ")
+                        .append(values[i] instanceof GroupCommand ? ((GroupCommand)values[i]).description : ((SubCommand)values[i]).description);
 
                 if(line.length() > maxStringSize) maxStringSize = line.length();
                 response.append(line.append("\n"));

@@ -3,10 +3,9 @@ package pliexe.guimenu.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import pliexe.guimenu.GroupCommand;
+import pliexe.guimenu.commandhandler.GroupCommand;
 import pliexe.guimenu.GuiMenu;
-import pliexe.guimenu.commands.guimenu.List;
-import pliexe.guimenu.commands.guimenu.Show;
+import pliexe.guimenu.commands.guimenu.*;
 
 public class GroupGuiMenu extends GroupCommand implements CommandExecutor {
 
@@ -21,7 +20,12 @@ public class GroupGuiMenu extends GroupCommand implements CommandExecutor {
     @Override
     protected void loadCommands() {
         LoadCommand(new Show(plugin));
-        LoadCommand(new List());
+        LoadCommand(new List(plugin));
+        LoadCommand(new New(plugin));
+        LoadCommand(new Save(plugin));
+        LoadCommand(new Reload(plugin));
+        LoadCommand(new Create(plugin));
+        LoadCommand(new Edit(plugin));
     }
 
     @Override

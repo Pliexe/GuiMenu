@@ -1,7 +1,17 @@
-########################################
-########################################
-###                                  ###
-###             GuiMenu              ###
-###   Made by Pliexe/DiamondZombie   ###
-###                                  ###
-########################################
+# !----------------------------------! #
+##                                    ##
+##              GuiMenu               ##
+##    Made by Pliexe/DiamondZombie    ##
+##                                    ##
+# !----------------------------------! #
+
+# Menus
+menus:
+  default:
+    displayName: "&4GUI ddd"
+    rows: 6
+    items:
+      5:
+        item: ARMOR_STAND
+        data: 0
+        displayName: "&6Test item"
